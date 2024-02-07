@@ -1,0 +1,43 @@
+console.log("Hello world"); //print data
+
+
+let names = "Muhammad Fadhil"
+console.log(names)
+
+names = "Muhammad Fadhil"
+console.log(names)
+
+contoh const
+const myAge = 15
+myAge = 16
+console.log(myAGe)
+
+
+data tidak berubah
+variabel
+var, const, let,
+const tidak bisa berubah (konstan)
+let nilainya dinamis/bisa dimasukkan ulang
+
+
+**** type data = jenis data => bisa menyimpan banyak byte atau digit
+
+data primitif type data non primitif => tidak bisa menjangkau dat akompleks atau tingakta kerumitan tinggi
+string,number,boolean, null, undefined, symbol.
+
+// primitif
+var name = "John"; // String
+var age = 30; // Number
+var isStudent = true; // Boolean
+var x; // Undefined
+var car = null; // Null
+// non primitif
+var person = {name: "John", age: 30}; // Object
+var numbers = [1, 2, 3]; // Array
+function greet() { return "Hello!"; } // Function
+var currentDate = new Date(); // Date
+var pattern = /pattern/; // RegExp
+
+
+*****pengkodisian*********
+if, else, switch case
