@@ -1,15 +1,16 @@
-
 <html>
-  <head>
-    <title>Pesonal Web</title>
-    <link href="./assets/css/style.css" rel="stylesheet">
-  </head>
 
+<head>
+  <title>Pesonal Web</title>
+  <link href="./assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Navbar -->
   <nav>
     <div class="left">
       <ul>
-        <img src="./assets/image/logo.png" alt="logo-image" />
-        
+        <img style="width: 7%" src="./assets/image/3.png" alt="logo-image" />
         <li class="active">
           <a href="./index.html">Home</a>
         </li>
@@ -23,46 +24,45 @@
       <a href="">Contact Me</a>
     </div>
   </nav>
-  <body style="background-color: whitesmoke;">
 
-    <!-- Form contact me -->
-    <h1 style="text-align: center;">GET IN TOUCH</h1>
-    <form>
-      <div>
-        <label id="name">Name</label>
-        <input type="text" id=""/>
-      </div>
+  <!-- Form contact me -->
+  <form>
+    <div>
+      <label>Name</label>
+      <input type="text" placeholder="Type your name..." id="name" />
+    </div>
 
-      <div>
-        <label>Email</label>
-        <input type="email" />
-      </div>
+    <div>
+      <label>Email</label>
+      <input type="email" placeholder="Type your email..." id="email" />
+    </div>
 
-      <div>
-        <label>Phone Number</label>
-        <input type="text" />
-      </div>
-      
-      <div>
-        <label>Subject</label>
-        <select style="background-color:white;">
-          <option hidden>Select Options!</option>
-          <option>Frontend Developer</option>
-          <option>Backend Developer</option>
-          <option>Fullstack Developer</option>
-        </select>
-      </div>
+    <div>
+      <label>Phone Number</label>
+      <input type="text" placeholder="Type your phone number..." id="phone" />
+    </div>
 
-      <div>
-        <label>Your Message</label>
-        <textarea></textarea>
-      </div>
+    <div>
+      <label>Subject</label>
+      <select id="subject">
+        <option hidden>Select Options!</option>
+        <option>Frontend Developer</option>
+        <option>Backend Developer</option>
+        <option>Fullstack Developer</option>
+      </select>
+    </div>
 
-      <div style="padding-top: 3%; padding-left: 77%;">
-        <button>Submit</button>
-      </div>
-    </form>
-  </body>
-  <script src="./assets/js/script.js"></script>
+    <div>
+      <label>Your Message</label>
+      <textarea id="message"></textarea>
+    </div>
+
+    <div style="padding-top: 3%; padding-left: 77%;">
+      <button type="button" onclick="getData()">Submit</button>
+    </div>
+  </form>
+</body>
+
+<script src="./assets/js/script.js"></script>
 
 </html>
