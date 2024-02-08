@@ -18,9 +18,9 @@ function getData() {
       return alert("Please type your message")
     }
   
-    const emailDestination = "hi.dandi9@gmail.com"
+    const emailDestination = "mfdhll07@gmail.com"
     let a = document.createElement("a")
-    a.href = `mailto:${emailDestination}?subject=${subject}&body= Halo bang nama saya, ${name}, saya ingin ${message}. bisakah anda menghubungi saya ${phone}`
+    a.href = `mailto:${emailDestination}?subject=${subject}&body= Selamat siang, ${name}, saya ingin ${message}. bisakah anda menghubungi saya ${phone}`
     a.click()
   
     const data = {
