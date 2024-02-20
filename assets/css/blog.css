@@ -1,163 +1,8 @@
-body {
-  margin: 0;
-}
-
-flex-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.flex-container>div {
-  margin: 10px;
-  padding: 80px;
-}
-
-.flex {
-  display: flex;
-  justify-content: center;
-  /* Horizontally centers items */
-  align-items: center;
-  /* Vertically centers items */
-  height: 400px;
-  /* Example height */
-  border: 2px solid #333;
-  /* Example border for visualization */
-}
-
-/* navbar */
-nav {
-  display: flex;
-  justify-content: space-between;
-  background-color: #dbdbdb;
-  padding: 0 80px;
-  align-items: center;
-}
-
-nav .left{
-  flex: 50%;
-}
-
-nav .left ul {
-  display: flex;
-  align-items: center;
-  padding: 0;
-}
-
-nav .left ul img {
-  margin-right: 40px;
-}
-
-nav .left ul li a {
-  color: black;
-  text-decoration: none;
-}
-
-nav .left ul .active a {
-  font-weight: bold;
-  color: black;
-}
-
-nav .right a {
-  text-decoration: none;
-  background-color: black;
-  padding: 8px 20px;
-  border-radius: 5px;
-  color: white;
-}
-
-nav .left ul li {
-  list-style-type: none;
-  margin-right: 25px;
-}
-
-/* form submission */
-
-form {
-  width: 350px;
-  margin: 50px auto;
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #dbdbdb;
-  margin-top: 5px;
-}
-
-textarea {
-  resize: none;
-  height: 100px;
-}
-
-form label {
-  font-weight: bold;
-}
-
-form div {
-  margin-top: 10px;
-
-}
-
-form div button {
-  background-color: black;
-  padding: 8px 20px;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  font-weight: bold;
-}
-
-
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 30px;
-  padding-right: 10px;
-  padding-left: 20px;
-}
-
-.card {
-  width: 325px;
-  background-color: #F0f0f0;
-  overflow: hidden;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  margin: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 5px;
-}
-
-.card img {
-  width: 100%;
-  height: auto;
-
-}
-
-.card-content h3 {
-  font-size: 28px;
-  margin-bottom: 8px;
-  margin-left: 10px;
-}
-
-button {
-  background-color: black;
-  padding: 4px 10px;
-  border: none;
-  border-radius: 2px;
-  color: white;
-  font-weight: bold;
-}
-
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 * {
   text-decoration: none;
   font-family: "Poppins", sans-serif;
-
 }
 
 body {
@@ -210,16 +55,16 @@ nav ul li .active {
   padding: 50px 0;
   display: flex;
   justify-content: center;
-
 }
 
 .blog-form .form-container {
-  width: 500px;
+  width: 800px;
 }
 
 .blog-form .form-container h1 {
   text-align: center;
   margin-bottom: 40px;
+  width: 500px;
 }
 
 .blog-form form label {
@@ -230,7 +75,7 @@ nav ul li .active {
 .blog-form form input,
 textarea,
 select {
-  width: 100%;
+  width: 500%;
   font-size: 20px;
   font-weight: 400;
   padding: 8px;
@@ -242,7 +87,7 @@ select {
 }
 
 .blog-form form textarea {
-  height: 100px;
+  height: 250px;
 }
 
 .blog-form form .input-blog-image-group {
@@ -296,9 +141,8 @@ select {
   margin-top: 80px;
   margin-bottom: 80px;
   display: flex;
-  flex-wrap: wrap;
-
-  /* align-items: center; */
+  align-items: center;
+  flex-direction: column;
 }
 
 .blog .blog-list .blog-list-item {
@@ -308,7 +152,6 @@ select {
   border: 2px solid #dbdbdb;
   border-radius: 8px;
   display: flex;
-  flex-wrap: wrap;
 }
 
 .blog .blog-list .blog-list-item .blog-image {
@@ -316,7 +159,7 @@ select {
 }
 
 .blog .blog-list .blog-list-item .blog-image img {
-  width: 150%;
+  width: 100%;
   height: 300px;
   object-fit: cover;
 }
@@ -324,8 +167,6 @@ select {
 .blog .blog-list .blog-list-item .blog-content {
   padding-left: 20px;
   flex: 2;
-  display: flex;
-
 }
 
 .blog .blog-list .btn-group {
@@ -424,24 +265,15 @@ select {
 }
 
 .hamburger-bars-items a.active {
-  background-color: rgb(209, 159, 93);
+  background-color: rgb(192, 132, 53);
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 600px) {
   .collapse-item {
     display: none;
   }
+
   .hamburger-bars {
     display: block;
-  }
-  img .logo {
-    display: block;
-  }
-  .right{
-    display: none;
-  }
-  .respon, .col-75, input[type=submit] {
-    width: 100%;
-    margin-top: 0;
   }
 }
