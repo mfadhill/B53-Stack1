@@ -41,3 +41,10 @@ var pattern = /pattern/; // RegExp
 
 *****pengkodisian*********
 if, else, switch case
+
+
+
+
+beda property sama method
+property apa yg dia miliki
+method apa yg bisa dilakukan

@@ -62,3 +62,58 @@
 // }
 
 // console.log(memeebrship("dandi saputra", true))
+let dataBlogs = [];
+
+function addBlog(event) {
+  event.preventDefault();
+
+  let title = document.getElementById("input-blog-title").value;
+  let content = document.getElementById("input-blog-content").value;
+  let postAt = new Date();
+
+  // console.log(postAt.getFullYear());
+  // console.log(postAt.getMonth());
+  // console.log(postAt.getDate());
+
+  let dataBlog = {
+    title,
+    content: content,
+    postAt,
+  };
+
+  dataBlogs.push(dataBlog);
+  // console.log(dataBlogs);
+
+  renderBlog();
+}
+
+function renderBlog() {
+  document.getElementById("contents").innerHTML = "";
+
+  for (let index = 0; index < dataBlogs.length; index++) {
+    document.getElementById("contents").innerHTML += `
+    <div class="blog-list-item">
+    <div class="blog-image">
+      <img src="assets/image/1.jpg" alt="" />
+    </div>
+    <div class="blog-content">
+      <div class="btn-group">
+        <button class="btn-edit">Edit Post</button>
+        <button class="btn-post">Delete Post</button>
+      </div>
+      <h1>
+        <a href="blog-detail.html" target="_blank"
+          >${dataBlogs[index].title}</a
+        >
+      </h1>
+      <div class="detail-blog-content">
+        ${getFullDate(dataBlogs[index].postAt)}| Muhammad Fadhil
+      </div>
+      <p>
+      ${dataBlogs[index].content}
+      </p>
+    </div>
+  </div>
+    `;
+  }
+}
