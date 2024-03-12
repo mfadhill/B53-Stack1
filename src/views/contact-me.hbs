@@ -1,0 +1,83 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Me</title>
+    <link rel="stylesheet" href="assets/css/contact.css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/2a19752420.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="left">
+            <ul>
+                <img src="assets/img/brandred.png" alt="logo-dumbways">
+               <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/project">My Project</a>
+                </li>
+                <li>
+                    <a href="/testimonial">Testimonial</a>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <a href="">Contact Me</a>
+        </div>
+        <div class="hamburger">
+            <button style="background-color: transparent; border: none; cursor: pointer;" onclick="openHamburger()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+    <div class="hamburger-items" id="hamburger-items">
+        <a href="index.html">Home</a>
+        <a href="project.html">My Project</a>
+        <a href="testimonial.html">Testimonial</a>
+        <a href="contact-me.html" class="contact">Contact Me</a>
+    </div>
+    <div class="judul">
+        <h1>GET IN TOUCH</h1>
+    </div>
+    <form class="form">
+        <div>
+            <label>Name</label>
+            <input type="text" id="name" />
+        </div>
+
+        <div>
+            <label>Email</label>
+            <input type="email" id="email" />
+        </div>
+
+        <div>
+            <label>Phone Number</label>
+            <input type="text" id="phone" />
+        </div>
+
+        <div>
+            <label>Subject</label>
+            <select id="subject">
+                <option hidden></option>
+                <option>Frontend</option>
+                <option>Backend</option>
+                <option>Fullstack</option>
+            </select>
+        </div>
+        <div>
+            <label>Your Message</label>
+            <textarea id="message"></textarea>
+        </div>
+        <div class="submit">
+            <button type="button" onclick="getData()">Submit</button>
+        </div>
+    </form>
+</body>
+<script src="assets/js/script.js"></script>
+<script src="assets/js/hamburger.js"></script>
+
+</html>

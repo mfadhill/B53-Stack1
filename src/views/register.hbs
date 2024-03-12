@@ -1,0 +1,87 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="assets/css/project.css">
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <script src="https://kit.fontawesome.com/77b392a698.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="left">
+      <ul>
+        <img src="assets/img/brandred.png" alt="logo-dumbways">
+           <li>
+              <a href="/" >Home</a>
+            </li>
+          <li>
+               <a href="/project" >My Project</a>
+            </li>
+            <li>
+                 <a href="/testimonial">Testimonial</a>
+            </li>
+      </ul>
+    </div>
+    <div class="left" style="padding-left:41%">
+        <ul>
+        <li>
+            <a href="/register" class="active">Register</a>
+        </li>
+            <li>
+            <a href="/login">login</a>
+        </li>
+        </ul>
+    </div>
+    <div class="right">
+      <a href="/contact-me">Contact Me</a>
+    </div>
+    <div class="hamburger">
+      <button style="background-color: transparent; border: none; cursor: pointer;" onclick="openHamburger()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+  <div class="hamburger-items" id="hamburger-items">
+    <a href="index.html">Home</a>
+    <a href="project.html" class="active">My Project</a>
+    <a href="testimonial.html">Testimonial</a>
+    <a href="contact-me.html" class="contact">Contact Me</a>
+  </div>
+
+  <!-- Navbar -->
+
+  <!-- Project -->
+    <div class="project">
+    <div class="project-form">
+      <div class="form-container">
+        <form method="post" action="/register" id="card-form">
+          <h1>Register</h1>
+           <div>
+            <label for="input-project-title">name</label>
+            <input id="input-project-title" name="name" type="text" id="name" />
+          </div>
+          <div>
+            <label for="input-project-title">Email</label>
+            <input id="input-project-title" name="email" type="email" id="email" />
+          </div>
+              <div>
+            <label for="input-project-title">Password</label>
+            <input id="input-project-title"  name="password" type="password" id="password"/>
+          </div>
+          <div class="submit">
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+  </div>
+  <!-- Project -->
+</body>
+
+</html>
