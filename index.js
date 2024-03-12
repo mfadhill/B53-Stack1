@@ -44,7 +44,8 @@ app.get("/testimonial", testimonial);
 app.get("/contact-me", contact);
 app.get("/register", formRegister);
 app.post("/register", register);
-app.get("/login", login);
+app.get("/login", formLogin);
+app.post("/login", login);
 
 
 function home(req, res) {
