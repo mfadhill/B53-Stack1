@@ -25,8 +25,13 @@
                 </li>
             </ul>
         </div>
-           <div class="left" style="padding-left:41%">
+           <div class="left" style="margin-left:35%">
         <ul>
+            {{#if isLogin}}
+            <li class="d-flex">
+             <p style="color: brown;">{{user}}</p>
+            </li>
+         {{/if}}
         <li>
             <a href="/register">Register</a>
         </li>
@@ -51,8 +56,9 @@
         <a href="contact-me.html" class="contact">Contact Me</a>
     </div>
     <div class="container">
+       
         <div class="kiri">
-            <h1>Hi Welcome to my hut</h1>
+            <h1>Hi Welcome to my Portofolio</h1>
             <p class="paragraph">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur repellendus
                 consequuntur officia, exercitationem deleniti ratione facilis rem, sint totam nesciunt laudantium? At
                 delectus dolore officia perspiciatis nostrum in consectetur beatae ratione illum voluptatibus assumenda

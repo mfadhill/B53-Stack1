@@ -16,7 +16,7 @@ const sequelizeConfig = new Sequelize(connection.development);
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
+app.use("/assets", express.static("src/assets"));
 app.use(flash());
 app.use(
     session({
@@ -32,14 +32,13 @@ app.use(
     })
 );
 
-
 app.set("view engine", "hbs");
 app.set("views", "src/views");
 
-app.use("/assets", express.static("src/assets"));
 
 app.get("/", home);
 app.get("/project", project);
+app.get("/addProject", addProject);
 app.get("/testimonial", testimonial);
 app.get("/contact-me", contact);
 app.get("/register", formRegister);
@@ -49,11 +48,17 @@ app.post("/login", login);
 
 
 function home(req, res) {
-    res.render("index");
+    res.render("index", {
+        isLogin: req.session.isLogin,
+        user: req.session.user,
+      });
 }
 
 function project(req, res) {
     res.render("project");
+}
+function addProject(req, res) {
+    res.render("addProject");
 }
 
 function testimonial(req, res) {
@@ -63,8 +68,6 @@ function testimonial(req, res) {
 function contact(req, res) {
     res.render("contact-me");
 }
-
-
 
 async function register(req, res) {
     try {
@@ -93,6 +96,9 @@ function formRegister(req, res) {
     res.render("register");
 }
 
+function formLogin(req, res) {
+    res.render("login");
+}
 async function login(req, res) {
     try {
         const {
@@ -109,7 +115,6 @@ async function login(req, res) {
             req.flash("danger", "Email has not been registered");
             return res.redirect("/login");
         }
-
         await bcrypt.compare(
             password,
             isCheckEmail[0].password,
@@ -130,7 +135,6 @@ async function login(req, res) {
         console.log(error);
     }
 }
-
 app.listen(port, () => {
     console.log(` Project ${port}`);
 });

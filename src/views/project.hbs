@@ -59,65 +59,15 @@
   <div class="project">
     <div class="project-form">
       <div class="form-container">
-        <form onsubmit="addProject(event)" id="card-form">
-          <h1>ADD MY PROJECT</h1>
-          <div>
-            <label for="input-project-title">Project Name</label>
-            <input id="input-project-title" />
-          </div>
-          <div class="input-date">
-            <div>
-              <label for="input-project-start">Start Date</label>
-              <input type="date" id="input-project-start" />
-            </div>
-            <div>
-              <label for="input-project-end">End Date</label>
-              <input type="date" id="input-project-end" />
-            </div>
-          </div>
-          <div>
-            <label for="input-project-desc">Description</label>
-            <textarea id="input-project-desc"></textarea>
-          </div>
-          <div class="tech">
-            <label for="tech">Technologies</label>
-          </div>
-          <div class="checkbox-test">
-            <label>
-              <input type="checkbox" name="technology" value="fa-brands fa-node fa-2xl" />
-              <span>Node JS</span>
-            </label>
-            <label>
-              <input type="checkbox" name="technology" value="fa-brands fa-react  fa-2xl">
-              <span>React JS</span>
-            </label>
-          </div>
-          <div class="checkbox-test">
-            <label>
-              <input type="checkbox" name="technology" value="fa-brands fa-golang  fa-2xl">
-              <span>Golang</span>
-            </label>
-            <label>
-              <input type="checkbox" name="technology" value="fa-brands fa-js  fa-2xl">
-              <span>Javascript</span>
-            </label>
-          </div>
-          <div class="submit">
-            <button>Submit</button>
-          </div>
-        </form>
+          <h1>MY PROJECT</h1>
+        <div class="addProject" style="">
+          <a href="/addProject"> Add Project</a>
+        </div>
       </div>
     </div>
 
-    <div id="test"></div>
-    <hr class="line" />
-    <div id="contents" class="project-list">
-      <!-- dynamic content would be here -->
-    </div>
   </div>
 
-  <!-- Project -->
-  <script src="assets/js/project.js"></script>
   <script src="assets/js/hamburger.js"></script>
 </body>
 
