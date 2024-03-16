@@ -6,16 +6,18 @@
   <title>My Project</title>
   <link rel="stylesheet" href="assets/css/project.css">
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/77b392a698.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
   <!-- Navbar -->
-  <nav>
+  <nav style="height:70px ">
     <div class="left">
       <ul>
-        <img src="assets/img/brandred.png" alt="logo-dumbways">
+        <img src="assets/img/logo.png" alt="logo-dumbways">
            <li>
               <a href="/" >Home</a>
             </li>
@@ -27,16 +29,25 @@
             </li>
       </ul>
     </div>
-       <div class="left" style="padding-left:41%">
-        <ul>
-        <li>
-            <a href="/register" >Register</a>
-        </li>
-            <li>
-            <a href="/login">login</a>
-        </li>
-        </ul>
-    </div>
+       <div class="left" style="padding-left:35%">
+         <ul>
+            {{#if isLogin}}
+                <li class="d-flex">
+                    <p style="color: brown;"> Hello, {{user}}</p>
+                </li>
+                <li>
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+              {{else}}
+                <li>
+                    <a href="/register">Register</a>
+                </li>
+                 <li>
+                    <a href="/login">login</a>
+                  </li>
+                {{/if}}
+          </ul>
+      </div>
     <div class="right">
       <a href="/contact-me">Contact Me</a>
     </div>
@@ -57,14 +68,129 @@
 
   <!-- Project -->
   <div class="project">
-    <div class="project-form">
-      <div class="form-container">
-          <h1>MY PROJECT</h1>
-        <div class="addProject" style="">
-          <a href="/addProject"> Add Project</a>
-        </div>
-      </div>
-    </div>
+                <div class="container d-flex flex-column mt-5">
+        <div id="contents">
+            {{#if messages.success}}
+            <div class="alert alert-success" role="alert">
+                <div class="container">
+                    {{messages.success}}
+                </div>
+            </div>
+            {{/if}}
+            {{#if isLogin}}
+            {{#each datas}}
+            <div class="card mb-3" style="width: 100%;">
+                <div class="row g-0">
+                    <div class="col-md-4 p-3">
+                        <img src="/uploads/{{this.image}}" class="img-fluid w-100" alt="image-review">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-end">
+                                <a class="btn btn-secondary mb-2 me-2" href="/edit-project/{{this.id}}">Edit
+                                    post</a>
+                                <a class="btn btn-primary modal-delete mb-2" data-bs-toggle="modal"
+                                    data-bs-target="#deleteProjectModal" data-id="{{this.id}}">Delete post</a>
+                                <!-- Modal for Project Deletion -->
+                                <div class="modal fade" id="deleteProjectModal" tabindex="-1"
+                                    aria-labelledby="deleteProjectModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteProjectModalLabel">Delete Project
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to delete this project?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancel</button>
+                                                <a id="confirmDeleteBtn" class="btn btn-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2 class="card-title m-0 p-0">
+                                <a class="text-decoration-none text-black m-0 p-0" href="/project-detail/{{this.id}}"
+                                    target="_blank">{{this.title}}</a>
+                            </h2>
+
+                            <div class="m-0 p-0 mb-4 mt-2" style="font-size: 14px;">
+                                Start Date: {{this.startDateFormatted}} | End Date: {{this.endDateFormatted}}
+                            </div>
+
+                            <p class="card-text m-0 p-0 text-truncate mb-3">{{this.content}}</p>
+                            {{#if this.node}}
+                            <i class="mt-5 me-2 "><i class="fa-brands fa-node fa-2xl"></i></i>
+                            {{/if}}
+                            {{#if this.react}}
+                            <i class="mt-5 me-2"><i class="fa-brands fa-react fa-2xl"></i></i>
+                            {{/if}}
+                            {{#if this.golang}}
+                            <i class="mt-5 me-2"><i class="fa-brands fa-golang fa-2xl"></i></i>
+                            {{/if}}
+                            {{#if this.js}}
+                            <i class="mt-5 me-2 "><i class="fa-brands fa-js fa-2xl"></i></i>
+                            {{/if}}
+                            <p class="mt-3 card-text"><small clanpss="text-body-secondary">Durasi :
+                                    {{this.diff_date}}
+                                </small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            {{else}}
+            {{#each data}}
+            <div class="card mb-3" style="width: 100%;">
+                <div class="row g-0">
+                    <div class="col-md-4 p-3">
+                        <img src="/uploads/{{this.image}}" class="img-fluid w-100" alt="image-review">
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="card-body">
+                
+                            <h2 class="card-title m-0 p-0">
+                                <a class="text-decoration-none text-black m-0 p-0" href="/project-detail/{{this.id}}"
+                                    target="_blank">{{this.title}}</a>
+                            </h2>
+
+                            <div class="m-0 p-0 mb-4 mt-2" style="font-size: 14px;">
+                                Start Date: {{this.startDateFormatted}} | End Date: {{this.endDateFormatted}}
+                            </div>
+
+                            <p class="card-text m-0 p-0 text-truncate mb-3">{{this.content}}</p>
+                            {{#if this.node}}
+                            <i class="mt-5 me-2 "><i class="fa-brands fa-node fa-2xl"></i></i>
+                            {{/if}}
+                            {{#if this.react}}
+                            <i class="mt-5 me-2"><i class="fa-brands fa-react fa-2xl"></i></i>
+                            {{/if}}
+                            {{#if this.golang}}
+                            <i class="mt-5 me-2"><i class="fa-brands fa-golang fa-2xl"></i></i>
+                            {{/if}}
+                            {{#if this.js}}
+                            <i class="mt-5 me-2 "><i class="fa-brands fa-js fa-2xl"></i></i>
+                            {{/if}}
+                            <p class="mt-3 card-text"><small clanpss="text-body-secondary">Durasi :
+                                    {{this.diff_date}}
+                                </small></p>
+                            <p class="mt-3 card-text"><small clanpss="text-body-secondary">Author :
+                                    {{this.author}}
+                                </small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            {{/if}}
+               </div>
 
   </div>
 

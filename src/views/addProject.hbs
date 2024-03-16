@@ -27,16 +27,25 @@
             </li>
       </ul>
     </div>
-       <div class="left" style="padding-left:41%">
+       <div class="left" style="margin-left:35%">
         <ul>
-        <li>
-            <a href="/register" >Register</a>
-        </li>
-            <li>
-            <a href="/login">login</a>
-        </li>
-        </ul>
-    </div>
+            {{#if isLogin}}
+              <li class="d-flex">
+                <p style="color: brown;"> Hello, {{user}}</p>
+              </li>
+                    <li>
+                    <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                {{else}}
+                    <li>
+                    <a href="/register">Register</a>
+                    </li>
+                    <li>
+                    <a href="/login">login</a>
+                    </li>
+                 {{/if}}
+                </ul>
+                </div>
     <div class="right">
       <a href="/contact-me">Contact Me</a>
     </div>
@@ -53,71 +62,72 @@
     <a href="contact-me.html" class="contact">Contact Me</a>
   </div>
 
-  <!-- Navbar -->
-
   <!-- Project -->
   <div class="project">
     <div class="project-form">
       <div class="form-container">
-        <form onsubmit="addProject(event)" id="card-form">
+         {{#if messages.danger}}
+        <div class="alert alert-danger mt-5" role="alert">
+          <div class="container">
+        {{messages.danger}}
+      </div>
+    </div>
+    {{/if}}
           <h1>ADD MY PROJECT</h1>
+        <form id="card-form" action="/addProject" method="post" enctype="multipart/form-data">
           <div>
             <label for="input-project-title">Project Name</label>
-            <input id="input-project-title" />
+            <input id="input-project-title" name="name" type="text" / >
           </div>
           <div class="input-date">
             <div>
               <label for="input-project-start">Start Date</label>
-              <input type="date" id="input-project-start" />
+              <input type="date" id="input-project-start" name="start_date" />
             </div>
             <div>
               <label for="input-project-end">End Date</label>
-              <input type="date" id="input-project-end" />
+              <input type="date" id="input-project-end" name="end_date"/>
             </div>
           </div>
           <div>
             <label for="input-project-desc">Description</label>
-            <textarea id="input-project-desc"></textarea>
+            <textarea id="input-project-desc" name="description"> </textarea>
           </div>
           <div class="tech">
             <label for="tech">Technologies</label>
           </div>
           <div class="checkbox-test">
             <label>
-              <input type="checkbox" name="technology" value="fa-brands fa-node fa-2xl" />
+              <input type="checkbox" value="node" name="node" />
               <span>Node JS</span>
             </label>
             <label>
-              <input type="checkbox" name="technology" value="fa-brands fa-react  fa-2xl">
+              <input type="checkbox" name="react" value="react">
               <span>React JS</span>
             </label>
           </div>
           <div class="checkbox-test">
             <label>
-              <input type="checkbox" name="technology" value="fa-brands fa-golang  fa-2xl">
+              <input type="checkbox" name="golang" value="golang">
               <span>Golang</span>
             </label>
             <label>
-              <input type="checkbox" name="technology" value="fa-brands fa-js  fa-2xl">
-              <span>Javascript</span>
+              <input type="checkbox" name="nextjs" value="nextjs">
+              <span>Next Js</span>
             </label>
           </div>
+           <div class="mb-3">
+        <label for="formFile" class="form-label">Upload Image</label>
+        <input class="form-control" type="file" id="formFile" name="image">
+      </div>
           <div class="submit">
-            <button>Submit</button>
+            <button type="submit">Submit</button>
           </div>
         </form>
       </div>
     </div>
+ </div>
 
-    <div id="test"></div>
-    <hr class="line" />
-    <div id="contents" class="project-list">
-      <!-- dynamic content would be here -->
-    </div>
-  </div>
-
-  <!-- Project -->
-  <script src="assets/js/project.js"></script>
   <script src="assets/js/hamburger.js"></script>
 </body>
 
