@@ -118,7 +118,8 @@
           </div>
            <div class="mb-3">
         <label for="formFile" class="form-label">Upload Image</label>
-        <input class="form-control" type="file" id="formFile" name="image" value="tw">
+        <input class="form-control" type="file" id="formFile" name="image" >
+        <img src="/uploads/{{ this.image }}" alt="" >
       </div>
           <div class="submit">
             <button type="submit">Update</button>

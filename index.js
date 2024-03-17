@@ -53,6 +53,7 @@ app.set("views", "src/views");
 
 app.get("/", home);
 app.get("/project", project);
+app.get("/projectDetail/:id", projectDetail);
 app.get("/testimonial", testimonial);
 app.get("/contact-me", contact);
 app.get("/register", formRegister);
@@ -81,21 +82,13 @@ async function register(req, res) {
                 await sequelizeConfig.query(
                     `INSERT INTO users(name, email, password, "createdAt", "updatedAt") VALUES ('${name}', '${email}', '${dataHash}', NOW(), NOW())`
                 );
-                res.redirect("/");
+                res.redirect("/login");
             }
         });
     } catch (error) {
         console.log(error);
     }
 }
-
-// function requireLogin(req, res, next) {
-//     if (!req.session.isLogin) {
-//         req.flash('danger', 'You must be logged in to access this page');
-//         return res.redirect('/login');
-//     }
-//     next();
-// };
 
 function formRegister(req, res) {
     res.render("register");
@@ -185,9 +178,10 @@ async function home(req, res) {
 async function project(req, res) {
     try {
         if (req.session.isLogin === true) {
-            const QueryName = `SELECT a.id, a.name, a.start_date, a.end_date, a.image, a.description, a.node, a.react, a.golang, a.nextjs, a."updatedAt", u.name AS author 
+            const QueryName = `SELECT a.id, a.name, a.start_date, a.end_date, a.image, a.description, a.distance_date, a.node, a.react, a.golang, a.nextjs, a."updatedAt", u.name AS author 
             FROM projects a 
-            LEFT JOIN "users" u ON a.author = u.id 
+            LEFT JOIN "users" u 
+            ON a.author = u.id 
             WHERE a.author = ${req.session.idUser}
             ORDER BY a.id DESC`;
             const project = await sequelizeConfig.query(QueryName, {
@@ -196,8 +190,8 @@ async function project(req, res) {
             const object = project.map((data) => {
                 return {
                     ...data,
-                    startDateFormatted: new Date(data.start_date).toLocaleDateString(),
-                    endDateFormatted: new Date(data.end_date).toLocaleDateString()
+                    startDate: new Date(data.start_date).toLocaleDateString(),
+                    endDate: new Date(data.end_date).toLocaleDateString()
                 }
             })
             res.render("project", {
@@ -206,15 +200,15 @@ async function project(req, res) {
                 user: req.session.user
             });
         } else {
-            const QueryName = `SELECT p.id, p.name, p.start_date, p.end_date, p.image, p.description, p.node, p.react, p.golang, p.nextjs, p."updatedAt", u.name AS author FROM projects p LEFT JOIN "users" u ON p.author = u.id ORDER BY id DESC`;
+            const QueryName = `SELECT a.id, a.name, a.start_date, a.end_date, a.distance_date, a.image, a.description, a.node, a.react, a.golang, a.nextjs, a."updatedAt", u.name AS author FROM projects a LEFT JOIN "users" u ON a.author = u.id ORDER BY id DESC`;
             const project = await sequelizeConfig.query(QueryName, {
                 type: QueryTypes.SELECT
             })
             const obj = project.map((dataa) => {
                 return {
                     ...dataa,
-                    startDateFormatted: new Date(dataa.start_date).toLocaleDateString(),
-                    endDateFormatted: new Date(dataa.end_date).toLocaleDateString()
+                    startDate: new Date(dataa.start_date).toLocaleDateString(),
+                    endDate: new Date(dataa.end_date).toLocaleDateString()
                 }
             })
             res.render("project", {
@@ -233,6 +227,28 @@ function addProject(req, res) {
         isLogin: req.session.isLogin,
         user: req.session.user
     });
+}
+const getDistanceTime = (start_date, end_date) => {
+    const startDateTime = new Date(start_date).getTime();
+    const endDateTime = new Date(end_date).getTime();
+    let durationTime = endDateTime - startDateTime;
+
+    let milisecond = 1000 // milisecond
+    let secondInHour = 3600 // 1 jam = 3600 detik
+    let hourInDay = 24 // 1 hari - 24 jam
+    let dayInMonth = 30 // 30 hari dalam 1 bulan
+
+    let durationMonth = Math.floor(
+        durationTime / (milisecond * secondInHour * hourInDay * dayInMonth)
+    );
+    let durationDay = Math.floor(
+        durationTime / (milisecond * secondInHour * hourInDay)
+    );
+    if (durationMonth > 0) {
+        return `${durationMonth} Month`;
+    } else if (durationDay > 0) {
+        return `${durationDay} Day`;
+    }
 }
 async function handleProject(req, res) {
     try {
@@ -264,13 +280,14 @@ async function handleProject(req, res) {
             req.flash('danger', 'End Date must beer Start Date')
             return res.redirect("/addProject")
         }
+        const distance_date = getDistanceTime(start_date, end_date);
         const nexts = nextjs ? true : false;
         const nodes = node ? true : false;
         const reacts = react ? true : false;
         const golangs = golang ? true : false;
         const QueryName = `INSERT INTO projects(
-            name, start_date, end_date, image, description, node, react, golang, nextjs, author, "createdAt", "updatedAt")
-            VALUES ('${name}','${start_date}','${end_date}','${image}','${description}', '${nodes}', '${reacts}','${golangs}','${nexts}', '${author}', NOW(), NOW())`;
+            name, start_date, end_date, image, description, distance_date, node,  react, golang, nextjs, author, "createdAt", "updatedAt")
+            VALUES ('${name}','${start_date}','${end_date}','${image}','${description}','${distance_date}', '${nodes}', '${reacts}','${golangs}','${nexts}', '${author}', NOW(), NOW())`;
         await sequelizeConfig.query(QueryName)
         req.flash('success', 'Project added successfully');
         res.redirect("/project");
@@ -348,8 +365,36 @@ async function handleEditProject(req, res) {
     }
 }
 
+async function projectDetail(req, res) {
+    try {
+        const id = req.params.id;
+        const QueryName = `SELECT * FROM projects where id=${id}`
+        const project = await sequelizeConfig.query(QueryName, {
+            type: QueryTypes.SELECT
+        })
+        const obj = project.map((data) => {
+            return {
+                ...data,
+                author: "M Fadhil",
+                startDate: new Date(data.start_date).toLocaleDateString(),
+                endDate: new Date(data.end_date).toLocaleDateString()
+            }
+        })
+        res.render("projectDetail", {
+            data: obj[0],
+            isLogin: req.session.isLogin,
+            user: req.session.user
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 function testimonial(req, res) {
-    res.render("testimonial");
+    res.render("testimonial", {
+        isLogin: req.session.isLogin,
+        user: req.session.user
+    });
 }
 
 function contact(req, res) {
@@ -358,9 +403,10 @@ function contact(req, res) {
 
 async function handleDeleteProject(req, res) {
     try {
-        const { id } = req.params;
+        const {
+            id
+        } = req.params;
         const QueryName = `DELETE FROM projects WHERE id = ${id}`;
-
         await sequelizeConfig.query(QueryName)
         req.flash('success', 'Project deleted successfully');
         res.redirect("/project");

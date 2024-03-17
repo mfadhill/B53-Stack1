@@ -2,7 +2,7 @@ export default {
   "development": {
     "username": "postgres",
     "password": "mf074625",
-    "database": "personal-web",
+    "database": "web",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },

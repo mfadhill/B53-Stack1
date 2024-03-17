@@ -21,6 +21,9 @@ module.exports = {
       image: {
         type: Sequelize.STRING
       },
+      distance_date: {
+        type: Sequelize.STRING
+      },
       description: {
         type: Sequelize.STRING
       },

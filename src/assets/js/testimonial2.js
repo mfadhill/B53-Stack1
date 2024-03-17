@@ -1,77 +1,80 @@
-const data = [{
-        name: "/assets/img/foto.jpg",
-        desc: "Fullsatck Developers",
-        image: "https://img001.prntscr.com/file/img001/VT0WQPcsRuGreoXrtP3l8Q.png",
-        rating: 3
-    },
-    {
-        name: "/assets/img/foto.jpg",
-        desc: "Fullsatck Developers",
-        image: "https://img001.prntscr.com/file/img001/7c3rRAA7Q_CYU_PslOOtCg.png",
-        rating: 4
-    },
-    {
-        name: "/assets/img/foto.jpg",
-        desc: "Fullsatck Developers",
-        image: "https://img001.prntscr.com/file/img001/33feiWwWTFG5NsfQqxOTvQ.png",
-        rating: 5
-    }
-]
+function testimonials() {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://api.npoint.io/1465052a4f4453fb4ba3/data", true);
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                resolve(response);
+            } else {
+                reject(new Error("Error loading data"));
+            }
+        };
+        xhr.onerror = () => {
+            reject(new Error("Network Error!"));
+        };
+        xhr.send();
+    });
+}
 
-function Testimonial() {
-    let htmlInner = ''
-
-    data.forEach(function (data) {
+function Testimonial(testimonialShow) {
+    let htmlInner = ``;
+    testimonialShow.forEach(function (value) {
         htmlInner += `
         <div class="card">
-        <img src="${data.image}">
-        <div class="content-testi">
-            <div class="desc-testi">
-                <i>"${data.desc}"</i>
+        <img src="${value.image}">
+        <div class="content-testimonial">
+            <div class="desc-testimonial">
+                <i>"${value.comment}"</i>
             </div>
-            <div class="name-testi">
-                <p>- ${data.name}</p>
+            <div class="name-testimonial">
+                <p>- ${value.author}</p>
             </div>
+            <div class="rating">
+                <p>${value.rate} <i class="fa-solid fa-star"></i></p>
+              </div>
         </div>
-    </div>
-        `
-    })
-
+    </div>`;
+    });
     let containerCard = document.querySelector(".container-card");
     containerCard.innerHTML = htmlInner;
 }
 
-Testimonial()
+function FilterTestimonial() {
+    const buttons = document.querySelectorAll(".rating-btn");
 
-// console.log(data[1].name)
+    buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const ratingFilter = parseInt(button.dataset.rate);
+            let testimonialShow;
+            if (ratingFilter === 0) {
+                testimonials()
+                    .then((data) => {
+                        testimonialShow = data;
+                        Testimonial(testimonialShow);
+                    })
+                    .catch((error) => console.error(error.message));
+            } else {
+                testimonials()
+                    .then((data) => {
+                        testimonialShow = data.filter(
+                            (testimonial) => testimonial.rate === ratingFilter
+                        );
+                        Testimonial(testimonialShow);
+                    })
+                    .catch((error) => console.error(error.message));
+            }
+        });
+    });
+}
 
-const FilterTestimonial = (rating) => {
-    let htmlInner = ''
-
-    const dataFiltered = data.filter((data) => {
-        return data.rating === rating
-    })
-
-    if (!dataFiltered.length) {
-        htmlInner += `<h1> Data tidak ditemukan!</h1>`
-    } else {
-        dataFiltered.forEach((data) => {
-            console.log(data)
-            htmlInner += `
-            <div class="card">
-                <img src="${data.image}">
-                <div class="content-testi">
-                    <div class="desc-testi">
-                        <i>"${data.desc}"</i>
-                    </div>
-                    <div class="name-testi">
-                        <p>- ${data.name}</p>
-                    </div>
-                </div>
-            </div>
-            `
+function initialize() {
+    testimonials()
+        .then((data) => {
+            Testimonial(data);
+            FilterTestimonial();
         })
-    }
-    let containerCard = document.querySelector(".container-card");
-    containerCard.innerHTML = htmlInner;
+        .catch((error) => console.error(error.message));
 }
+
+initialize();
