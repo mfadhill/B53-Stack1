@@ -29,6 +29,7 @@ const upload = multer({
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
 app.use("/assets", express.static("src/assets"));
 app.use("/uploads", express.static("src/uploads"));
 
@@ -52,15 +53,18 @@ app.set("views", "src/views");
 
 app.get("/", home);
 app.get("/project", project);
-app.get("/addProject", addProject);
-app.post("/addProject", upload.single("image"), handleProject);
 app.get("/testimonial", testimonial);
 app.get("/contact-me", contact);
 app.get("/register", formRegister);
-app.post("/register", register);
 app.get("/login", formLogin);
+app.get("/logout", logout);
+app.get("/addProject", addProject);
+app.get("/editProject/:id", editProject);
+app.get("/delete-project/:id", handleDeleteProject);
+app.post("/register", register);
 app.post("/login", login);
-app.post("/logout", logout);
+app.post("/addProject", upload.single("image"), handleProject);
+app.post("/editProject/:id", upload.single("image"), handleEditProject);
 
 async function register(req, res) {
     try {
@@ -85,8 +89,42 @@ async function register(req, res) {
     }
 }
 
+// function requireLogin(req, res, next) {
+//     if (!req.session.isLogin) {
+//         req.flash('danger', 'You must be logged in to access this page');
+//         return res.redirect('/login');
+//     }
+//     next();
+// };
+
 function formRegister(req, res) {
     res.render("register");
+}
+
+async function editProject(req, res) {
+    try {
+        const id = req.params.id;
+        const QueryName = `SELECT * FROM projects where id=${id}`
+
+        const project = await sequelizeConfig.query(QueryName, {
+            type: QueryTypes.SELECT
+        })
+        const obj = project.map((data) => {
+            return {
+                ...data
+            }
+        })
+        console.log(obj);
+
+
+        res.render("editProject", {
+            data: obj[0],
+            isLogin: req.session.isLogin,
+            user: req.session.user
+        });
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 function formLogin(req, res) {
@@ -128,7 +166,6 @@ async function login(req, res) {
     }
 }
 
-
 async function home(req, res) {
     try {
         const QueryName = "SELECT * FROM projects ORDER BY id DESC"
@@ -156,8 +193,15 @@ async function project(req, res) {
             const project = await sequelizeConfig.query(QueryName, {
                 type: QueryTypes.SELECT
             })
-
+            const object = project.map((data) => {
+                return {
+                    ...data,
+                    startDateFormatted: new Date(data.start_date).toLocaleDateString(),
+                    endDateFormatted: new Date(data.end_date).toLocaleDateString()
+                }
+            })
             res.render("project", {
+                data: object,
                 isLogin: req.session.isLogin,
                 user: req.session.user
             });
@@ -166,15 +210,15 @@ async function project(req, res) {
             const project = await sequelizeConfig.query(QueryName, {
                 type: QueryTypes.SELECT
             })
-            const obj = project.map((data) => {
+            const obj = project.map((dataa) => {
                 return {
-                    ...data,
-                    startDateFormatted: new Date(data.start_date).toLocaleDateString(),
-                    endDateFormatted: new Date(data.end_date).toLocaleDateString()
+                    ...dataa,
+                    startDateFormatted: new Date(dataa.start_date).toLocaleDateString(),
+                    endDateFormatted: new Date(dataa.end_date).toLocaleDateString()
                 }
             })
             res.render("project", {
-                data: obj,
+                dataa: obj,
                 isLogin: req.session.isLogin,
                 user: req.session.user
             });
@@ -234,6 +278,75 @@ async function handleProject(req, res) {
         console.log(error)
     }
 }
+async function handleEditProject(req, res) {
+    try {
+        const {
+            id
+        } = req.params;
+        const {
+            name,
+            description,
+            start_date,
+            end_date,
+            node,
+            react,
+            golang,
+            nextjs
+        } = req.body;
+
+        if (!name || !description) {
+            req.flash('danger', 'Input form must be filled in');
+            return res.redirect(`/editProject/${id}`);
+        }
+
+        if (start_date == '') {
+            req.flash('danger', 'Please input start date');
+            return res.redirect(`/editProject/${id}`);
+        }
+        if (end_date == '') {
+            req.flash('danger', 'Please input end date');
+            return res.redirect(`/editProject/${id}`);
+        }
+
+        if (end_date <= start_date) {
+            req.flash('danger', 'End Date must be after Start Date');
+            return res.redirect(`/editProject/${id}`);
+        }
+        const nodes = node ? true : false;
+        const reacts = react ? true : false;
+        const golangs = golang ? true : false;
+        const nexts = nextjs ? true : false;
+        let image = '';
+
+        if (req.file) {
+            image = req.file.filename;
+        }
+
+        const QueryName = `
+            UPDATE projects 
+            SET 
+                name = '${name}',
+                start_date = '${start_date}',
+                end_date = '${end_date}',
+                ${image ? `image = '${image}',` : ''}
+                description = '${description}',
+                node = '${nodes}',
+                react = '${reacts}',
+                golang = '${golangs}',
+                nextjs = '${nexts}',
+                "updatedAt" = NOW()
+            WHERE 
+                id = ${id}
+        `;
+
+        await sequelizeConfig.query(QueryName);
+        req.flash('success', 'Project edit successfully');
+        res.redirect("/project");
+
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 function testimonial(req, res) {
     res.render("testimonial");
@@ -243,10 +356,18 @@ function contact(req, res) {
     res.render("contact-me");
 }
 
+async function handleDeleteProject(req, res) {
+    try {
+        const { id } = req.params;
+        const QueryName = `DELETE FROM projects WHERE id = ${id}`;
 
-app.listen(port, () => {
-    console.log(` Project ${port}`);
-});
+        await sequelizeConfig.query(QueryName)
+        req.flash('success', 'Project deleted successfully');
+        res.redirect("/project");
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 function logout(req, res) {
     req.session.destroy((err) => {
@@ -257,3 +378,7 @@ function logout(req, res) {
         }
     });
 }
+
+app.listen(port, () => {
+    console.log(` Project ${port}`);
+});

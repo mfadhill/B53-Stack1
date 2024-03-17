@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Project</title>
-  <link rel="stylesheet" href="assets/css/project.css">
+  <title>Edit Project</title>
+  <link rel="stylesheet" href="../assets/css/project.css">
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
   <script src="https://kit.fontawesome.com/77b392a698.js" crossorigin="anonymous"></script>
 </head>
@@ -15,11 +15,11 @@
   <nav>
     <div class="left">
       <ul>
-        <img src="assets/img/logo.png" alt="logo-dumbways">
+        <img src="../assets/img/logo.png" alt="logo-dumbways">
            <li>
               <a href="/" >Home</a>
             </li>
-          <li>
+          <li >
                <a href="/project" class="active">My Project</a>
             </li>
             <li>
@@ -27,7 +27,7 @@
             </li>
       </ul>
     </div>
-       <div class="left" style="margin-left:35%">
+       <div class="left" style="margin-left:40%">
         <ul>
             {{#if isLogin}}
               <li class="d-flex">
@@ -73,55 +73,55 @@
       </div>
     </div>
     {{/if}}
-          <h1>ADD MY PROJECT</h1>
-        <form id="card-form" action="/addProject" method="post" enctype="multipart/form-data">
+          <h1>Edit Project</h1>
+        <form id="card-form" action="/editProject/{{ data.id }}" method="post" enctype="multipart/form-data">
           <div>
-            <label for="input-project-title">Project Name</label>
-            <input id="input-project-title" name="name" type="text" / >
+            <label for="input-project-name">Project Name</label>
+            <input id="input-project-name" name="name" type="text" value="{{data.name}}" / >
           </div>
           <div class="input-date">
             <div>
               <label for="input-project-start">Start Date</label>
-              <input type="date" id="input-project-start" name="start_date" />
+              <input type="date" id="input-project-start" name="start_date" value="{{data.start_date}}" />
             </div>
             <div>
               <label for="input-project-end">End Date</label>
-              <input type="date" id="input-project-end" name="end_date"/>
+              <input type="date" id="input-project-end" name="end_date" value="{{data.end_date}}"/>
             </div>
           </div>
           <div>
             <label for="input-project-desc">Description</label>
-            <textarea id="input-project-desc" name="description"> </textarea>
+            <textarea id="input-project-desc" name="description"> {{data.description}}</textarea>
           </div>
           <div class="tech">
             <label for="tech">Technologies</label>
           </div>
           <div class="checkbox-test">
             <label>
-              <input type="checkbox" value="node" name="node" />
+              <input type="checkbox" value="node" name="node" {{#if data.node}} checked {{/if}} />
               <span>Node JS</span>
             </label>
             <label>
-              <input type="checkbox" name="react" value="react">
+              <input type="checkbox" name="react" value="react" {{#if data.react}} checked {{/if}}>
               <span>React JS</span>
             </label>
           </div>
           <div class="checkbox-test">
             <label>
-              <input type="checkbox" name="golang" value="golang">
+              <input type="checkbox" name="golang" value="golang" {{#if data.golang}} checked {{/if}}>
               <span>Golang</span>
             </label>
             <label>
-              <input type="checkbox" name="nextjs" value="nextjs">
+              <input type="checkbox" name="nextjs" value="nextjs" {{#if data.nextjs}} checked {{/if}}>
               <span>Next Js</span>
             </label>
           </div>
            <div class="mb-3">
         <label for="formFile" class="form-label">Upload Image</label>
-        <input class="form-control" type="file" id="formFile" name="image">
+        <input class="form-control" type="file" id="formFile" name="image" value="tw">
       </div>
           <div class="submit">
-            <button type="submit">Submit</button>
+            <button type="submit">Update</button>
           </div>
         </form>
       </div>
